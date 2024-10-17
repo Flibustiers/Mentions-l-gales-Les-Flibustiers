@@ -1,1 +1,1 @@
-Bienvenue a toi qui lis ceci
+Bienvenue a toi

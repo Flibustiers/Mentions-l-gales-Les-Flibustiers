@@ -2,7 +2,7 @@
 /*
 Plugin Name: Mentions Légales
 Description: Plugin pour gérer les mentions légales du site via un shortcode.
-Version: 1.1
+Version: 1.2
 Author: Anthony REBOURS - Développeur web chez Les Flibustiers
 */
 

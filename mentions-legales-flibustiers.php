@@ -2,10 +2,12 @@
 /*
 Plugin Name: Mentions Légales
 Description: Plugin pour gérer les mentions légales du site via un shortcode.
-Version: 1.3
+Version: 1.4
 Author: Anthony REBOURS - Développeur web chez Les Flibustiers
 */
 
+// Permet de vérifier la version pour MAJ auto du plugin
+require plugin_dir_path(__FILE__) . 'includes/plugin-update-checker/plugin-update-checker.php';
 if (!defined('ABSPATH')) exit;
 
 // Fonction pour ajouter le menu dans l'admin
@@ -153,108 +155,15 @@ function ml_generate_legal_mentions() {
 }
 add_shortcode('mentions_legales', 'ml_generate_legal_mentions');
 
-class MLPluginUpdater {
-    private $file;
-    private $plugin;
-    private $basename;
-    private $active;
-    private $username = 'Flibustiers'; // Remplace par ton nom d'utilisateur GitHub
-    private $repository = 'Mentions-l-gales-Les-Flibustiers'; // Remplace par le nom de ton dépôt GitHub
-    private $github_api_result;
-    
-    public function __construct($file) {
-        $this->file = $file;
-        add_action('admin_init', array($this, 'set_plugin_properties'));
-        add_filter('pre_set_site_transient_update_plugins', array($this, 'modify_transient'), 10, 1);
-        add_filter('plugins_api', array($this, 'plugin_popup'), 10, 3);
-        add_filter('upgrader_post_install', array($this, 'after_install'), 10, 3);
-    }
+// Namespace de la librairie de PUC -> plugin pour maj auto
+use YahnisElsts\PluginUpdateChecker\v5p4\PucFactory;
 
-    public function set_plugin_properties() {
-        $this->plugin = get_plugin_data($this->file);
-        $this->basename = plugin_basename($this->file);
-        $this->active = is_plugin_active($this->basename);
-    }
+$updateChecker = PucFactory::buildUpdateChecker(
+    'https://github.com/Flibustiers/Mentions-l-gales-Les-Flibustiers/', // URL du dépôt GitHub
+    __FILE__, // Chemin vers le fichier principal du plugin
+    'Mentions-l-gales-Les-Flibustiers' // Slug du plugin
+);
 
-    private function get_repository_info() {
-        if (is_null($this->github_api_result)) {
-            $url = "https://api.github.com/repos/{$this->username}/{$this->repository}/releases/latest";
-            $response = wp_remote_get($url);
-            if (is_wp_error($response)) return false;
-            $this->github_api_result = json_decode(wp_remote_retrieve_body($response));
-        }
-    }
-
-  public function modify_transient($transient) {
-    if (empty($transient->checked)) return $transient;
-    
-    $this->get_repository_info();
-
-    // Vérifie si les données de l'API sont disponibles et valides
-    if (!isset($this->github_api_result->tag_name)) {
-        // Si aucune version n'est récupérée, on ignore la mise à jour
-        return $transient;
-    }
-
-    $current_version = $transient->checked[$this->basename] ?? null;
-    $new_version = $this->github_api_result->tag_name;
-    
-    // Vérifie que les versions ne sont pas nulles avant de comparer
-    if ($current_version && $new_version) {
-        $out_of_date = version_compare($new_version, $current_version, 'gt');
-        
-        if ($out_of_date) {
-            $package = $this->github_api_result->zipball_url;
-            $slug = current(explode('/', $this->basename));
-            $plugin = array(
-                'url' => $this->plugin["PluginURI"],
-                'slug' => $slug,
-                'package' => $package,
-                'new_version' => $new_version,
-                'id' => $this->basename
-            );
-            $transient->response[$this->basename] = (object) $plugin;
-        }
-    }
-    return $transient;
-}
-    public function plugin_popup($result, $action, $args) {
-        if (!empty($args->slug) && $args->slug == current(explode('/', $this->basename))) {
-            $this->get_repository_info();
-            $plugin = array(
-                'name' => $this->plugin["Name"],
-                'slug' => $this->basename,
-                'version' => $this->github_api_result->tag_name,
-                'author' => $this->plugin["AuthorName"],
-                'homepage' => $this->plugin["PluginURI"],
-                'short_description' => $this->plugin["Description"],
-                'sections' => array(
-                    'Description' => $this->plugin["Description"],
-                    'Updates' => $this->github_api_result->body
-                ),
-                'download_link' => $this->github_api_result->zipball_url
-            );
-            return (object) $plugin;
-        }
-        return $result;
-    }
-
-    public function after_install($response, $hook_extra, $result) {
-        global $wp_filesystem;
-        $plugin_folder = WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . dirname($this->basename);
-        $wp_filesystem->move($result['destination'], $plugin_folder);
-        $result['destination'] = $plugin_folder;
-
-        if ($this->active) {
-            activate_plugin($this->basename);
-        }
-        return $result;
-    }
-}
-
-if (is_admin()) {
-    new MLPluginUpdater(__FILE__);
-}
-
-
+// Définis la branche, ici `master` par défaut.
+$updateChecker->setBranch('master');
 

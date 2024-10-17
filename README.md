@@ -1,2 +1,2 @@
-# Mentions-l-gales-Les-Flibustiers
+# Mentions-legales-Les-Flibustiers
 Mentions légales Les Flibustiers

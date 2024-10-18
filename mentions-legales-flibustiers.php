@@ -2,12 +2,12 @@
 /*
 Plugin Name: Mentions Légales
 Description: Plugin pour gérer les mentions légales du site via un shortcode.
-Version: 1.6
+Version: 1.7
 Author: Anthony REBOURS - Développeur web chez Les Flibustiers
 */
 
 // Permet de vérifier la version pour MAJ auto du plugin
-require plugin_dir_path(__FILE__) . 'includes/plugin-update-checker/plugin-update-checker.php';
+require plugin_dir_path(__FILE__) . 'plugin-update-checker/plugin-update-checker.php';
 if (!defined('ABSPATH')) exit;
 
 // Fonction pour ajouter le menu dans l'admin

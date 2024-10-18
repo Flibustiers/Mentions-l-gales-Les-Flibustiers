@@ -2,7 +2,7 @@
 /*
 Plugin Name: Mentions Légales
 Description: Plugin pour gérer les mentions légales du site via un shortcode.
-Version: 1.7
+Version: 1.8
 Author: Anthony REBOURS - Développeur web chez Les Flibustiers
 */
 
@@ -112,7 +112,7 @@ function ml_generate_legal_mentions() {
 
     return "
     <h2>Identification</h2>
-    <p>Propriétaire : $site_internet</p>
+    <p>Propriétaire : $proprietaire</p>
     $adresse_field
     $telephone_field
     <p>Adresse e-mail : <a href='$contact_url'>cliquez ici pour accéder au formulaire</a></p>

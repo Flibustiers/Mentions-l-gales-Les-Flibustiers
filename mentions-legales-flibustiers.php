@@ -2,7 +2,7 @@
 /*
 Plugin Name: Mentions Légales
 Description: Plugin pour gérer les mentions légales du site via un shortcode.
-Version: 1.8
+Version: 1.9
 Author: Anthony REBOURS - Développeur web chez Les Flibustiers
 */
 
@@ -133,7 +133,7 @@ function ml_generate_legal_mentions() {
     <p>Pour accéder à notre politique de cookies et en savoir plus sur les différents cookies utilisés, <a href='$cookies_policy'>cliquez ici</a>.</p>
 
     <h2>Politique de confidentialité</h2>
-    <p>$site_internet est particulièrement attentive au respect des obligations légales de tout éditeur de site internet et suit les recommandations de la commission nationale de l’informatique et des libertés (CNIL).</p>
+    <p>L'equipe de $site_internet est particulièrement attentive au respect des obligations légales de tout éditeur de site internet et suit les recommandations de la commission nationale de l’informatique et des libertés (CNIL).</p>
     <p>D’une façon générale, vous pouvez visiter le site web de $site_internet sans avoir à décliner votre identité et à fournir des informations personnelles vous concernant. Cependant, des informations peuvent vous être demandées. Par exemple, pour pouvoir répondre à votre demande de contact, vous établir un devis, répondre à votre candidature, etc.</p>
     <p>$site_internet respecte la vie privée de l’internaute et se conforme strictement aux lois en vigueur sur la protection de la vie privée et des libertés individuelles. Aucune information personnelle n’est collectée à votre insu. Aucune information personnelle n’est cédée à des tiers. Les adresses électroniques, numéros de téléphones ou autres informations nominatives dont ce site est destinataire sont conservées indéfiniment dans la base de données du site, et ne font l’objet d’aucune autre exploitation que celle pour quoi vous avez renseigné ces informations.</p>
     <p>En transmettant vos informations par le biais du formulaire de contact, vous acceptez que vos données soient stockées, de manière confidentielle, et utilisées par $site_internet pour répondre à votre requête.</p>

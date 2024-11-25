@@ -53,6 +53,10 @@ function ml_settings_page() {
                     <th scope="row">SIRET</th>
                     <td><input type="text" name="ml_siret" value="<?php echo esc_attr(get_option('ml_siret')); ?>" /></td>
                 </tr>
+		<tr>
+                    <th scope="row">Activité</th>
+                    <td><input type="text" name="ml_activite" value="<?php echo esc_attr(get_option('ml_activite')); ?>" /></td>
+                </tr>    
                 <tr>
                     <th scope="row">Adresse</th>
                     <td><input type="text" name="ml_adresse" value="<?php echo esc_attr(get_option('ml_adresse')); ?>" /></td>
@@ -77,13 +81,9 @@ function ml_settings_page() {
                     <th scope="row">Hébergeur du site</th>
                     <td><input type="text" name="ml_hebergeur" value="<?php echo esc_attr(get_option('ml_hebergeur')); ?>" /></td>
                 </tr>
-				                <tr>
+		<tr>
                     <th scope="row">Lien vers l'hébergeur du site</th>
                     <td><input type="text" name="ml_hebergeur_lien" value="<?php echo esc_attr(get_option('ml_hebergeur_lien')); ?>" /></td>
-                </tr>
-                <tr>
-                    <th scope="row">Activité</th>
-                    <td><input type="text" name="ml_activite" value="<?php echo esc_attr(get_option('ml_activite')); ?>" /></td>
                 </tr>
             </table>
             <?php submit_button(); ?>
